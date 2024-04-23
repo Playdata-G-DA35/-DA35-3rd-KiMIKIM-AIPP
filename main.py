@@ -1,5 +1,4 @@
 import cv2
-#import numpy
 import os
 import glob
 import import_ipynb
@@ -29,4 +28,4 @@ if __name__ == '__main__':
             cv2.imwrite(save_path+moves[m]+pps[1]+img_name, pp_method_ino.make_gray_and_binary(im)) 
             cv2.imwrite(save_path+moves[m]+pps[2]+img_name, pp_method_ino.morphologing(im)) 
             cv2.imwrite(save_path+moves[m]+pps[3]+img_name, pp_method_ino.detect_edge(im, 0)) 
-            cv2.imwrite(save_path+moves[m]+pps[4]+img_name, pp_method_ino.detect_edge(im, 1)) 
+            cv2.imwrite(save_path+moves[m]+pps[4]+img_name, pp_method_ino.detect_edge(im, 1))
