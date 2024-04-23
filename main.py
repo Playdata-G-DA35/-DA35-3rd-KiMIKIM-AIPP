@@ -14,8 +14,12 @@ if __name__ == '__main__':
 	#이미지 이동 : 원본, 좌우반전, 5도, 10도, 15도 회전
     moves = ["origin_", "flip_", "rotation5_", "rotation10_", "rotation15_"]
     
-	#전처리 : 노이즈제거, 이진화, 열림, 엣지검출 라플라시안, 엣지검출 캐니
-    pps = ["gaussian_", "binary_", "opening_", "laplacian_", "canny_"]
+	#전처리 : 노이즈제거, 이진화, 열림, 엣지검출 라플라시안, 엣지검출 캐니, 오브젝트 추출
+    pps = ["gaussian_", "binary_", "opening_", "laplacian_", "canny_","extract_object_"]
+
+    #전처리별 경로 생성
+    for p in pps:
+        os.makedirs(save_path+p+"\\",exist_ok=True)
 
     for il in image_list:
         img = cv2.imread(il)
@@ -24,8 +28,12 @@ if __name__ == '__main__':
         img_moves = image_moving.moving(img)
         #이동 방식 + 전처리 방식 + 원본 파일 이름으로 이미지 저장
         for m, im in enumerate(img_moves):
-            cv2.imwrite(save_path+moves[m]+pps[0]+img_name, pp_method_ino.del_noise(im)) 
-            cv2.imwrite(save_path+moves[m]+pps[1]+img_name, pp_method_ino.make_gray_and_binary(im)) 
-            cv2.imwrite(save_path+moves[m]+pps[2]+img_name, pp_method_ino.morphologing(im)) 
-            cv2.imwrite(save_path+moves[m]+pps[3]+img_name, pp_method_ino.detect_edge(im, 0)) 
-            cv2.imwrite(save_path+moves[m]+pps[4]+img_name, pp_method_ino.detect_edge(im, 1))
+            cv2.imwrite(save_path+pps[0]+"\\"+moves[m]+pps[0]+img_name, pp_method_ino.del_noise(im)) 
+            cv2.imwrite(save_path+pps[1]+"\\"+moves[m]+pps[1]+img_name, pp_method_ino.make_gray_and_binary(im)) 
+            cv2.imwrite(save_path+pps[2]+"\\"+moves[m]+pps[2]+img_name, pp_method_ino.morphologing(im)) 
+            cv2.imwrite(save_path+pps[3]+"\\"+moves[m]+pps[3]+img_name, pp_method_ino.detect_edge(im, 0)) 
+            cv2.imwrite(save_path+pps[4]+"\\"+moves[m]+pps[4]+img_name, pp_method_ino.detect_edge(im, 1))
+            try:
+                cv2.imwrite(save_path+pps[5]+"\\"+moves[m]+pps[5]+img_name, pp_method_ino.extract_obj(im))
+            except:
+                pass
